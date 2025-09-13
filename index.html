@@ -155,7 +155,7 @@
         }
         let formattedWeeks = formatNumber(weeks);
 
-        result.textContent = `✅ النتيجة: ${formattedTicks} تكة او مل (${formattedWeeks} أسبوع) `;
+        result.textContent = `✅ النتيجة: ${formattedTicks} تكة او مل (${formattedWeeks} أسبوع) ✅`;
         showSyringe(formattedTicks);
       }
     }
@@ -263,29 +263,5 @@
     setupDoseGroup("dose-group-2", false);
   </script>
 
-  <!-- عداد الزوار الحقيقي -->
-  <div id="visitor-counter" class="w-full max-w-4xl text-center mt-6 mb-6">
-    <p class="text-xs text-gray-500">عدد زوار الصفحة: <span id="visitor-count">جاري التحميل...</span></p>
-  </div>
-  <script>
-    (function(){
-      const el = document.getElementById('visitor-count');
-      if(!el) return;
-      const url = encodeURIComponent(location.hostname + location.pathname);
-      fetch(`https://hits.seeyoufarm.com/api/count/incr?url=${url}&max=999999999`, {cache:'no-store'})
-        .then(r => r.json())
-        .then(data => {
-          if(data && data.value !== undefined){
-            el.textContent = Number(data.value).toLocaleString();
-          } else {
-            el.textContent = '—';
-          }
-        })
-        .catch(err => {
-          console.warn('hits.seeyoufarm error', err);
-          el.textContent = '—';
-        });
-    })();
-  </script>
 </body>
 </html>
