@@ -2,8 +2,8 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mounjaro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>اختيار المنتج</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -40,16 +40,19 @@
           <input type="radio" name="product" value="pens" class="w-5 h-5">
           <span>Pre-filled Pens (0.5mL)</span>
         </label>
+        <a id="pens-link" href="https://files.mealabels.gulf.lilly.com/content/mounjaro/kuwait/arabic%20instructions%20for%20use.pdf" target="_blank" class="text-blue-700 font-bold underline hidden">طريقة الاستخدام اضغط هنا</a>
 
         <label class="flex items-center gap-2 cursor-pointer">
           <input type="radio" name="product" value="kwik" class="w-5 h-5">
           <span>KwikPen (0.6mL)</span>
         </label>
+        <a id="kwik-link" href="https://files.mealabels.gulf.lilly.com/content/mounjaro-kwikpen/kuwait/english-arabic_instructions_for_use.pdf" target="_blank" class="text-blue-700 font-bold underline hidden">طريقة الاستخدام اضغط هنا</a>
 
         <label class="flex items-center gap-2 cursor-pointer">
           <input type="radio" name="product" value="vial" class="w-5 h-5">
           <span>Vial (0.5mL)</span>
         </label>
+        <a id="vial-link" href="https://files.mealabels.gulf.lilly.com/content/mounjaro-vial/bahrain/english%20physician%20information%20%26%20english-arabic%20patient%20information%20%26%20instructions%20for%20use.pdf" target="_blank" class="text-blue-700 font-bold underline hidden">طريقة الاستخدام اضغط هنا</a>
       </div>
 
       <!-- خيار منفصل استخدام الجرعة الذهبية (يظهر فقط عند اختيار KwikPen) -->
@@ -60,7 +63,7 @@
     </div>
   </div>
 
-  <!-- خيارات الجرعات أسفل الصفحة (المجموعة الأولى) -->
+  <!-- باقي الصفحة كما هي -->
   <div class="w-full max-w-4xl bg-white p-3 sm:p-4 rounded-2xl shadow text-center">
     <h2 class="text-base sm:text-lg font-semibold mb-3">💉 جرعة الابرة</h2>
     <div class="grid grid-cols-3 sm:grid-cols-7 gap-2 justify-center" id="dose-group-1">
@@ -70,11 +73,10 @@
       <button class="dose-btn text-white font-bold py-2 px-2 sm:px-3 rounded-lg shadow" style="background:#BB2A7D">10 mg</button>
       <button class="dose-btn text-white font-bold py-2 px-2 sm:px-3 rounded-lg shadow" style="background:#3775BA">12.5 mg</button>
       <button class="dose-btn text-white font-bold py-2 px-2 sm:px-3 rounded-lg shadow" style="background:#EF5243">15 mg</button>
-      <input id="dose-input-1" type="number" step="0.1" placeholder="اكتب الجرعة (mg)" class="dose-input border border-gray-300 rounded-lg py-2 px-2 text-center text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
+      <input id="dose-input-1" type="number" step="0.1" placeholder="او اكتب هنا" class="dose-input border border-gray-300 rounded-lg py-2 px-2 text-center text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
     </div>
   </div>
 
-  <!-- خيارات الجرعات أسفل الصفحة (المجموعة الثانية) -->
   <div class="w-full max-w-4xl bg-white p-3 sm:p-4 rounded-2xl shadow text-center">
     <h2 class="text-base sm:text-lg font-semibold mb-3">🎯 الجرعة المطلوبة</h2>
     <div class="grid grid-cols-3 sm:grid-cols-7 gap-2 justify-center" id="dose-group-2">
@@ -84,22 +86,25 @@
       <button class="dose-btn text-white font-bold py-2 px-2 sm:px-3 rounded-lg shadow" style="background:#BB2A7D">10 mg</button>
       <button class="dose-btn text-white font-bold py-2 px-2 sm:px-3 rounded-lg shadow" style="background:#3775BA">12.5 mg</button>
       <button class="dose-btn text-white font-bold py-2 px-2 sm:px-3 rounded-lg shadow" style="background:#EF5243">15 mg</button>
-      <input id="dose-input-2" type="number" step="0.1" placeholder="اكتب الجرعة (mg)" class="dose-input border border-gray-300 rounded-lg py-2 px-2 text-center text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
+      <input id="dose-input-2" type="number" step="0.1" placeholder="او اكتب هنا" class="dose-input border border-gray-300 rounded-lg py-2 px-2 text-center text-sm sm:text-base focus:ring-2 focus:ring-blue-500">
     </div>
   </div>
 
-  <!-- مكان ظهور النتيجة -->
   <div id="result" class="w-full max-w-4xl bg-white p-3 sm:p-4 rounded-2xl shadow text-center text-lg sm:text-xl font-bold text-gray-800">
     💡 النتيجة ستظهر هنا
   </div>
 
-  <!-- محاكي الإبرة -->
   <div class="syringe-wrap" id="syringeWrap" style="display:none; margin-top:60px;">
     <img src="https://www.mediafire.com/convkey/205f/4r9jw4nsd8cy0kc9g.jpg?size_id=8" alt="Needle" class="syringe-image">
     <div class="syringe">
       <div class="fill" id="syringeFill"></div>
       <div class="ticks" id="syringeTicks"></div>
     </div>
+  </div>
+
+  <!-- رابط الإبلاغ عن الخلل -->
+  <div class="w-full max-w-4xl text-left mt-6">
+    <a href="https://t.me/Brook" target="_blank" class="text-blue-600 text-xs underline">يوجد خلل في الصفحة</a>
   </div>
 
   <script>
@@ -109,6 +114,9 @@
     const result = document.getElementById("result");
     const goldenContainer = document.getElementById("golden-dose-container");
     const goldenCheckbox = document.getElementById("golden-dose");
+    const pensLink = document.getElementById("pens-link");
+    const kwikLink = document.getElementById("kwik-link");
+    const vialLink = document.getElementById("vial-link");
 
     let selectedProduct = null;
     let dose1 = null;
@@ -147,7 +155,7 @@
         }
         let formattedWeeks = formatNumber(weeks);
 
-        result.textContent = `✅ النتيجة: ${formattedTicks} تكة او مل (${formattedWeeks} أسبوع)`;
+        result.textContent = `✅ النتيجة: ${formattedTicks} تكة او مل (${formattedWeeks} أسبوع) ✅`;
         showSyringe(formattedTicks);
       }
     }
@@ -191,18 +199,26 @@
         selectedProduct = radio.value;
         let img = "";
         let text = "";
+
+        pensLink.classList.add("hidden");
+        kwikLink.classList.add("hidden");
+        vialLink.classList.add("hidden");
+
         if (radio.value === "pens") {
           img = '<img src="https://www.mediafire.com/convkey/5fc5/f0ws8hky9mteknr9g.jpg?size_id=5" alt="Pre-filled Pens" class="max-h-48 sm:max-h-60">';
           text = "✅ اخترت النوع: Pre-filled Pens";
+          pensLink.classList.remove("hidden");
           goldenContainer.classList.add("hidden");
           goldenCheckbox.checked = false;
         } else if (radio.value === "kwik") {
-          img = '<img src="https://www.mediafire.com/convkey/9c77/ygfjtf7mnymqmz89g.jpg?size_id=7" alt="KwikPen" class="max-h-48 sm:max-h-60">';
+          img = '<img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1440,h=756,fit=crop,f=jpeg/m6LwPO9OxyfDM5GN/moun-injection-Ylev471pQGc1LqD1.jpg" alt="KwikPen" class="max-h-48 sm:max-h-60">';
           text = "✅ اخترت النوع: KwikPen";
+          kwikLink.classList.remove("hidden");
           goldenContainer.classList.remove("hidden");
         } else if (radio.value === "vial") {
           img = '<img src="https://www.mediafire.com/convkey/3893/jmizc8gfqkzfvuu9g.jpg?size_id=6" alt="Vial" class="max-h-48 sm:max-h-60">';
           text = "✅ اخترت النوع: Vial";
+          vialLink.classList.remove("hidden");
           goldenContainer.classList.add("hidden");
           goldenCheckbox.checked = false;
         }
