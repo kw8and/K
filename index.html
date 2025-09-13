@@ -27,7 +27,7 @@
     <!-- الصورة يسار -->
     <div id="image-container" class="w-full md:w-1/2 h-48 sm:h-60 flex items-center justify-center">
       <p id="placeholder-text" class="text-red-600 font-bold flex items-center gap-2 text-center">
-        <span>❗</span> لم يتم اختيار أي خيار بعد
+        <span>⚠️</span> لم يتم اختيار أي خيار بعد
       </p>
     </div>
 
@@ -264,28 +264,26 @@
   </script>
 
   <!-- عداد الزوار الحقيقي -->
-  <div id="visitor-counter" class="w-full max-w-4xl text-center mt-6 mb-4">
+  <div id="visitor-counter" class="w-full max-w-4xl text-center mt-6 mb-6">
     <p class="text-xs text-gray-500">عدد زوار الصفحة: <span id="visitor-count">جاري التحميل...</span></p>
   </div>
   <script>
-    // استخدام خدمة مجانية (countapi.xyz) لعرض عدد الزوار الحقيقي
     (function(){
-      const namespace = 'mounjaro-page';
-      const key = 'visitors';
       const el = document.getElementById('visitor-count');
-
-      function showCount(n){
-        if(el) el.textContent = Number(n).toLocaleString();
-      }
-
-      fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+      if(!el) return;
+      const url = encodeURIComponent(location.hostname + location.pathname);
+      fetch(`https://hits.seeyoufarm.com/api/count/incr?url=${url}&max=999999999`, {cache:'no-store'})
         .then(r => r.json())
         .then(data => {
-          if(data.value !== undefined) showCount(data.value);
+          if(data && data.value !== undefined){
+            el.textContent = Number(data.value).toLocaleString();
+          } else {
+            el.textContent = '—';
+          }
         })
         .catch(err => {
-          console.warn('خطأ في جلب العداد:', err);
-          if(el) el.textContent = '—';
+          console.warn('hits.seeyoufarm error', err);
+          el.textContent = '—';
         });
     })();
   </script>
