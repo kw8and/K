@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>اختيار المنتج</title>
+  <title>Mounjaro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -263,52 +263,31 @@
     setupDoseGroup("dose-group-2", false);
   </script>
 
-  <!-- زائر الكونتر — يبدأ -->
-  <div id="visitor-counter" class="w-full max-w-4xl text-center mt-4 mb-8">
-    <p class="text-xs text-gray-500">عدد زوار الصفحة: <span id="visitor-count">تحميل...</span></p>
+  <!-- عداد الزوار الحقيقي -->
+  <div id="visitor-counter" class="w-full max-w-4xl text-center mt-6 mb-4">
+    <p class="text-xs text-gray-500">عدد زوار الصفحة: <span id="visitor-count">جاري التحميل...</span></p>
   </div>
-
   <script>
-    // Global visitor counter using countapi.xyz
-    // ملاحظة: لتحقيق زيادة "حقيقية" بدون سيرفر، نستخدم countapi (خدمة مجانية). هذه الطريقة تزيد العد مرة واحدة لكل متصفّح خلال 24 ساعة
+    // استخدام خدمة مجانية (countapi.xyz) لعرض عدد الزوار الحقيقي
     (function(){
-      const namespace = 'hgfh-mounjaro-visitor'; // غيّر هذا النص لو تبي مفتاح/اسم مختلف
-      const key = 'page_visitors';
-      const localKey = 'visitor_counted_' + namespace + '_' + key;
-      const dayMs = 24 * 60 * 60 * 1000;
-      const counted = localStorage.getItem(localKey);
-      const now = Date.now();
+      const namespace = 'mounjaro-page';
+      const key = 'visitors';
+      const el = document.getElementById('visitor-count');
 
       function showCount(n){
-        const el = document.getElementById('visitor-count');
-        if(!el) return;
-        el.textContent = Number(n).toLocaleString();
+        if(el) el.textContent = Number(n).toLocaleString();
       }
 
-      function fetchCount(hit){
-        const url = hit ?
-          `https://api.countapi.xyz/hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}` :
-          `https://api.countapi.xyz/get/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
-        fetch(url).then(r=>r.json()).then(data=>{
-          if(data && (data.value !== undefined)) showCount(data.value);
-        }).catch(err=>{
-          console.warn('countapi error', err);
-          const el = document.getElementById('visitor-count'); if(el) el.textContent = '—';
+      fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+        .then(r => r.json())
+        .then(data => {
+          if(data.value !== undefined) showCount(data.value);
+        })
+        .catch(err => {
+          console.warn('خطأ في جلب العداد:', err);
+          if(el) el.textContent = '—';
         });
-      }
-
-      // إذا لم تُسجّل زيارة خلال 24 ساعة من هذا المتصفح — نزيد العداد
-      if(!counted || (now - parseInt(counted,10) > dayMs)){
-        // hit (يزيد)
-        fetchCount(true);
-        try{ localStorage.setItem(localKey, String(now)); }catch(e){}
-      } else {
-        // فقط جلب القيمة الحالية دون زيادة
-        fetchCount(false);
-      }
     })();
   </script>
-  <!-- زائر الكونتر — ينتهي -->
-
 </body>
 </html>
